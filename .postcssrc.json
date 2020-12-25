@@ -1,0 +1,12 @@
+{
+  "map": false,
+  "plugins": {
+    "postcss-import": {},
+    "tailwindcss": {
+      "purge": [
+        "./src/html/**/*.html"
+      ]
+    },
+    "autoprefixer": {}
+  }
+}

@@ -1,7 +1,13 @@
+@import "../../node_modules/normalize.css/normalize.css";
+
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
+/* Components */
+@import "./components/table.css";
+
 body {
-    background-color: #d1d1d1;
+    column-count: 3;
+    @apply outline-none pt-6;
 }
