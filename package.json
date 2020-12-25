@@ -9,8 +9,16 @@
   "author": "Massimo",
   "license": "ISC",
   "dependencies": {
+    "normalize.css": "^8.0.1",
+    "tailwindcss": "^2.0.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.10",
+    "@babel/preset-env": "^7.12.11",
     "autoprefixer": "^10.1.0",
+    "babel-loader": "^8.2.2",
     "postcss": "^8.2.1",
-    "postcss-cli": "^8.3.1"
+    "postcss-cli": "^8.3.1",
+    "postcss-import": "^14.0.0"
   }
 }
