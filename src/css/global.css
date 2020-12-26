@@ -9,5 +9,6 @@
 
 body {
     column-count: 3;
+    /* background-image: url('./../img/test.jpg'); */
     @apply outline-none pt-6;
 }

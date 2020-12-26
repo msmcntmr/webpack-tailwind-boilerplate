@@ -1,6 +1,6 @@
 //ES6 Syntax
 
-import './../css/global.css';
+import "./../css/global.css";
 
 class sample {
     constructor(helloworld) {

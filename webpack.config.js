@@ -9,6 +9,7 @@ console.debug('Compiling for: ' + colors.bold.yellow(process.env.NODE_ENV));
 
 const minification = isProductionMode ? {
     minimizer: [
+        `...`,
         new CssMinimizerPlugin()
     ]
 } : {};
@@ -18,11 +19,12 @@ module.exports = {
     entry: __dirname + '/src/js/Application.js',
     output: {
         path: path.resolve(__dirname + '/public/', 'assets'),
-        filename: 'js/[name].[contenthash].bundle.js'
+        filename: 'js/[name]' + (isProductionMode ? '.[contenthash]' : '') + '.bundle.js'
     },
+    devtool: isProductionMode ? false : 'inline-source-map',
     plugins: [
         new MiniCssExtractPlugin({
-            filename: 'css/[name].[contenthash].css',
+            filename: 'css/[name]' + (isProductionMode ? '.[contenthash]' : '') + '.css',
             chunkFilename: "styles.css"
         }),
         /* new HtmlWebPackPlugin({
@@ -32,21 +34,38 @@ module.exports = {
     ],
     module: {
         rules: [
-            {
+            {   /* Javascript */
                 test: /\.m?js$/,
                 exclude: /node_modules/,
                 use: {
                     loader: "babel-loader"
                 }
             },
-            {
+            {   /* Stylesheets */
                 test: /\.css$/,
                 use: [
-                    MiniCssExtractPlugin.loader,
+                    {   
+                        loader: MiniCssExtractPlugin.loader,
+                        options: {
+                            publicPath: '/assets'
+                        }
+                    },
                     'css-loader',
                     'postcss-loader',
                 ],
             },
+            {   /* Images */
+                test: /\.(png|jpe?g|gif|svg)$/i,
+                use: [
+                    {
+                        loader: 'file-loader',
+                        options: {
+                            name: '[name].[ext]',
+                            outputPath: 'img',
+                        }
+                    }
+                ]
+            }
         ]
     },
     optimization: minification
