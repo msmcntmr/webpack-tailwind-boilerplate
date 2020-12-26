@@ -1,6 +1,7 @@
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin');
 const colors = require('colors');
 //const HtmlWebPackPlugin = require("html-webpack-plugin");
 
@@ -22,29 +23,19 @@ module.exports = {
         filename: 'js/[name]' + (isProductionMode ? '.[contenthash]' : '') + '.bundle.js'
     },
     devtool: isProductionMode ? false : 'inline-source-map',
-    plugins: [
-        new MiniCssExtractPlugin({
-            filename: 'css/[name]' + (isProductionMode ? '.[contenthash]' : '') + '.css',
-            chunkFilename: "styles.css"
-        }),
-        /* new HtmlWebPackPlugin({
-            template: __dirname + "/src/index.html",
-            filename: __dirname + "/public/index.html"
-        }), */
-    ],
     module: {
         rules: [
-            {   /* Javascript */
+            {   // Javascript
                 test: /\.m?js$/,
                 exclude: /node_modules/,
                 use: {
                     loader: "babel-loader"
                 }
             },
-            {   /* Stylesheets */
+            {   // Stylesheet
                 test: /\.css$/,
                 use: [
-                    {   
+                    {
                         loader: MiniCssExtractPlugin.loader,
                         options: {
                             publicPath: '/assets'
@@ -54,7 +45,7 @@ module.exports = {
                     'postcss-loader',
                 ],
             },
-            {   /* Images */
+            {   // Images
                 test: /\.(png|jpe?g|gif|svg)$/i,
                 use: [
                     {
@@ -68,5 +59,35 @@ module.exports = {
             }
         ]
     },
+    plugins: [
+        new MiniCssExtractPlugin({
+            filename: 'css/[name]' + (isProductionMode ? '.[contenthash]' : '') + '.css',
+            chunkFilename: "styles.css"
+        }),
+        new ImageMinimizerPlugin({
+            minimizerOptions: {
+                // Lossless optimization with custom option
+                plugins: [
+                    ['gifsicle', { interlaced: true }],
+                    ['jpegtran', { progressive: true }],
+                    ['optipng', { optimizationLevel: 5 }],
+                    [
+                        'svgo',
+                        {
+                            plugins: [
+                                {
+                                    removeViewBox: false,
+                                }
+                            ]
+                        }
+                    ]
+                ]
+            }
+        })
+        /* new HtmlWebPackPlugin({
+            template: __dirname + "/src/index.html",
+            filename: __dirname + "/public/index.html"
+        }), */
+    ],
     optimization: minification
 };

@@ -1,12 +1,14 @@
+/* Tailwind */
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
-/* Components */
-@import "./components/table.css";
+/* Custom imported components */
+@import "./components/component.css";
 
+/* Custom CSS */
 body {
     column-count: 3;
-    /* background-image: url('./../img/test.jpg'); */
+    background-image: url('./../img/1608678123114.jpg');
     @apply outline-none pt-6;
 }
