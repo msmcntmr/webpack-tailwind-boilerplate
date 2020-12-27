@@ -7,3 +7,4 @@ node_modules
 /public/assets/img/*.jpeg
 /public/assets/img/*.gif
 /public/assets/img/*.svg
+.vscode
